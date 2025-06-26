@@ -374,7 +374,8 @@ func parseAPIHost(s string) (apiHost, error) {
 		return apiHost{}, fmt.Errorf("host must have a scheme (http or https): %s", s)
 	}
 
-	if strings.HasSuffix(u.Hostname(), "github.com") {
+	// Fix for URLs in the form https://custom-github.com, or https://my.customgithub.com etc.
+	if strings.HasSuffix(u.Hostname(), ".github.com") {
 		return newDotcomHost()
 	}
 
